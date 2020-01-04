@@ -3,22 +3,20 @@ FROM alpine:3.11
 
 LABEL maintainer="Pavel Petrov <itnelo@gmail.com>"
 LABEL version="0.1.0"
-LABEL description="Docker SSH tunnel"
+LABEL description="A simple SSH tunnel for port forwarding within Docker environment"
+
+ENV LOCAL_HOST *
+ENV LOCAL_PORT _
+
+ENV REMOTE_HOST 127.0.0.1
+ENV REMOTE_PORT _
+
+ENV SSH_TUNNEL_HOST _
+ENV SSH_TUNNEL_PORT 22
+ENV SSH_TUNNEL_USER root
 
 RUN apk add --update openssh-client && rm -rf /var/cache/apk/*
 
-ARG LOCAL_HOST=*
-ARG LOCAL_PORT
+COPY docker-ssh-tunnel-cmd.sh /usr/local/bin/docker-ssh-tunnel-cmd.sh
 
-ARG REMOTE_HOST=127.0.0.1
-ARG REMOTE_PORT
-
-ARG SSH_TUNNEL_HOST
-ARG SSH_TUNNEL_PORT=22
-ARG SSH_TUNNEL_USER=root
-
-CMD ssh \
-        -p $SSH_TUNNEL_PORT \
-        -L $LOCAL_HOST:$LOCAL_PORT:$REMOTE_HOST:$REMOTE_PORT \
-        $SSH_TUNNEL_USER@$SSH_TUNNEL_HOST \
-        -N
+CMD ["docker-ssh-tunnel-cmd.sh"]
