@@ -1,6 +1,10 @@
 
 # Docker SSH tunnel
 
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/symfonydoge/docker-ssh-tunnel)
+![Docker Pulls](https://img.shields.io/docker/pulls/symfonydoge/docker-ssh-tunnel)
+![Docker Stars](https://img.shields.io/docker/stars/symfonydoge/docker-ssh-tunnel)
+
 This docker image can be used in case when you need
 an access, for example, to some service on your production server,
 which doesn't expose it's ports to the worldwide.
@@ -35,7 +39,7 @@ see full list of environment variables below).
 Now each container in the compose project can access
 tunnelled resource through `ssh-tunnel-example:6379`.
 
-### Environment Variables
+## Environment Variables
 
 | Name              | Default value | Description                                                                       |
 | :---------------- | :------------ | :-------------------------------------------------------------------------------- |
@@ -47,7 +51,7 @@ tunnelled resource through `ssh-tunnel-example:6379`.
 | `SSH_TUNNEL_PORT` | 22            | SSH daemon port on the remote server                                              |
 | `SSH_TUNNEL_USER` | root          | User login for establishing an SSH connection                                     |
 
-### Hints
+## Hints
 
 - You can expose a port only for local access
 in your docker-compose project, just specify localhost
