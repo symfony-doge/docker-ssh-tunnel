@@ -1,9 +1,9 @@
 
 # Docker SSH tunnel
 
-![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/symfonydoge/docker-ssh-tunnel)
-![Docker Pulls](https://img.shields.io/docker/pulls/symfonydoge/docker-ssh-tunnel)
-![Docker Stars](https://img.shields.io/docker/stars/symfonydoge/docker-ssh-tunnel)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/symfonydoge/docker-ssh-tunnel)](https://hub.docker.com/r/symfonydoge/docker-ssh-tunnel/builds)
+[![Docker Pulls](https://img.shields.io/docker/pulls/symfonydoge/docker-ssh-tunnel)](https://hub.docker.com/r/symfonydoge/docker-ssh-tunnel)
+[![Docker Stars](https://img.shields.io/docker/stars/symfonydoge/docker-ssh-tunnel)](https://hub.docker.com/r/symfonydoge/docker-ssh-tunnel)
 
 This docker image can be used in case when you need
 an access, for example, to some service on your production server,
@@ -12,8 +12,6 @@ Additionally, you don't want to touch ports on your local machine,
 because some of them can be busy or just reserved.
 
 ## Usage
-
-### docker run
 
 ### docker-compose.yml
 
@@ -38,6 +36,25 @@ see full list of environment variables below).
 
 Now each container in the compose project can access
 tunnelled resource through `ssh-tunnel-example:6379`.
+
+### docker run
+
+This image mostly handy to use with compose tools like docker-compose
+as an automation of port forwarding routine within docker network.
+But no one can stop you (ouh) to use it directly
+to make some ports of your host machine dirty,
+here comes a snippet:
+
+```
+docker run \
+    --name "ssh-tunnel-example" \
+    --rm \
+    -p 6379:6379 \
+    -v "$HOME/.ssh/id_rsa:/root/ssh-import/id_rsa:ro" \
+    -e "SSH_TUNNEL_HOST=corp.domain.ltd" \
+    -e "REMOTE_PORT=6379" \
+    -d symfonydoge/docker-ssh-tunnel
+```
 
 ## Environment Variables
 
